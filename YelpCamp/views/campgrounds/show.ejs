@@ -1,0 +1,67 @@
+<%- include("../partials/header")%>
+<div class="container mt-3 ml-10">
+    <div class="row">
+        <div class="col-md-3">
+            <a class="btn btn-primary mb-3" href="/campgrounds">All campgrounds</a>
+            <p class="lead">YelpCamp</p>
+            <div class="list-group active"></div>
+            <div class="list-group"></div>
+            <div class="list-group"></div>
+        </div>
+        <div class="col-md-9">
+            <div class="card">
+                <img class="card-img-top" src="<%= cg.image%>" alt="loading...">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <h4 class="card-title">information about <strong><a href="/campgrounds/<%= cg._id%>"><%= cg.name %></a></strong></h4>
+                        <h4>$<%= cg.price%>/night</h4>
+                    </div>
+                    <div>
+                        <p><%= cg.description%></p>
+                        <div class="row justify-content-between px-4">
+                            <p><em>Submitted by <%= cg.author.username%></em></p>
+                            <% if(currUser && cg.author.id.equals(currUser._id)) {%>
+                                <div class="row justify-content-end">
+                                    <a class="btn btn-warning mr-2" href="/campgrounds/<%= cg._id%>/edit">Edit</a>
+                                    <form action="/campgrounds/<%= cg._id %>?_method=DELETE" method="POST">
+                                        <button class="btn btn-danger">Delete</button>
+                                    </form>
+                                </div>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card bg-light mt-3">
+                <div class="my-2 mr-2 d-flex justify-content-end">
+                    <a class="btn btn-info" href="/campgrounds/<%= cg._id %>/comments/new">Add a new comment</a>
+                </div>
+                <div class="card-body">
+                    <% cg.comments.forEach((cm)=>{ %>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="d-flex justify-content-between">
+                                    <strong><%= cm.author.username%></strong>
+                                    <span>10 days ago</span>
+                                </div>
+                                <div class="row justify-content-between px-4">
+                                    <p><%= cm.text%></p>
+                                    <% if(currUser && cm.author.id.equals(currUser._id)){ %>
+                                    <div class="row justify-content-end">
+                                        <a class="btn btn-sm btn-outline-warning mr-2" href="/campgrounds/<%= cg._id%>/comments/<%= cm._id%>/edit">Edit</a>
+                                        <form action="/campgrounds/<%= cg._id%>/comments/<%= cm._id%>?_method=DELETE" method="POST">
+                                            <button class="btn btn-sm btn-outline-danger">Delete</button>
+                                        </form>
+                                    </div>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    <%})%>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include("../partials/footer")%>

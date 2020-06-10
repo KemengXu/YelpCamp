@@ -1,0 +1,10 @@
+<%- include("../partials/header.ejs")%>
+<div class="container">
+    <h3 class="font-weight-light">Register</h3>
+    <form action="/register" method="POST">
+        <input class="form-group" type="text" name="username" placeholder="username">
+        <input class="form-group" type="password" name="password" placeholder="password">
+        <button>Submit</button>
+    </form>
+</div>
+<%- include("../partials/footer.ejs")%>
